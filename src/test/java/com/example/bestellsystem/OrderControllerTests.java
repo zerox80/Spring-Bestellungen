@@ -1,5 +1,6 @@
 package com.example.bestellsystem;
 
+import com.example.bestellsystem.model.Role;
 import com.example.bestellsystem.model.User;
 import com.example.bestellsystem.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,6 +12,8 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.EnumSet;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -41,6 +44,7 @@ class OrderControllerTests {
         User testUser = new User();
         testUser.setUsername("testuser");
         testUser.setPassword("password");
+        testUser.setRoles(EnumSet.of(Role.USER));
         userRepository.save(testUser);
 
         mockMvc.perform(get("/orders"))
@@ -55,6 +59,7 @@ class OrderControllerTests {
         User testUser = new User();
         testUser.setUsername("testuser");
         testUser.setPassword("password");
+        testUser.setRoles(EnumSet.of(Role.USER));
         userRepository.save(testUser);
 
         mockMvc.perform(post("/orders")
