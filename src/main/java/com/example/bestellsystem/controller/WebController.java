@@ -1,23 +1,25 @@
 package com.example.bestellsystem.controller;
 
 import com.example.bestellsystem.model.User;
-import com.example.bestellsystem.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import com.example.bestellsystem.service.UserService;
+import com.example.bestellsystem.service.UsernameAlreadyExistsException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
+
 @Controller
 public class WebController {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserService userService;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    public WebController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/")
     public String index() {
@@ -31,10 +33,16 @@ public class WebController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles("USER"); // Default role
-        userRepository.save(user);
+    public String registerUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "register";
+        }
+        try {
+            userService.registerUser(user);
+        } catch (UsernameAlreadyExistsException e) {
+            bindingResult.rejectValue("username", "user.exists", e.getMessage());
+            return "register";
+        }
         return "redirect:/login";
     }
 

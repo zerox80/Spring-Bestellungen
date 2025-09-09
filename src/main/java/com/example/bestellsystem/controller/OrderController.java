@@ -1,33 +1,31 @@
 package com.example.bestellsystem.controller;
 
 import com.example.bestellsystem.model.Order;
-import com.example.bestellsystem.model.User;
-import com.example.bestellsystem.repository.OrderRepository;
-import com.example.bestellsystem.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.bestellsystem.service.OrderService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.validation.Valid;
 import java.security.Principal;
 
 @Controller
 @RequestMapping("/orders")
 public class OrderController {
 
-    @Autowired
-    private OrderRepository orderRepository;
+    private final OrderService orderService;
 
-    @Autowired
-    private UserRepository userRepository;
+    public OrderController(OrderService orderService) {
+        this.orderService = orderService;
+    }
 
     @GetMapping
     public String listOrders(Model model, Principal principal) {
-        User user = userRepository.findByUsername(principal.getName());
-        model.addAttribute("orders", orderRepository.findByUser(user));
+        model.addAttribute("orders", orderService.findOrdersForCurrentUser(principal));
         return "orders";
     }
 
@@ -38,10 +36,11 @@ public class OrderController {
     }
 
     @PostMapping
-    public String saveOrder(@ModelAttribute Order order, Principal principal) {
-        User user = userRepository.findByUsername(principal.getName());
-        order.setUser(user);
-        orderRepository.save(order);
+    public String saveOrder(@Valid @ModelAttribute("order") Order order, BindingResult bindingResult, Principal principal) {
+        if (bindingResult.hasErrors()) {
+            return "order-form";
+        }
+        orderService.saveOrderForCurrentUser(order, principal);
         return "redirect:/orders";
     }
 }

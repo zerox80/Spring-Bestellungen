@@ -1,10 +1,17 @@
 package com.example.bestellsystem.model;
 
 import javax.persistence.Entity;
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import java.util.Objects;
 
 @Entity
 @Table(name = "users")
@@ -13,9 +20,18 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank(message = "Username darf nicht leer sein")
+    @Size(min = 3, max = 20, message = "Username muss zwischen 3 und 20 Zeichen lang sein")
     private String username;
+
+    @NotBlank(message = "Passwort darf nicht leer sein")
+    @Size(min = 8, message = "Passwort muss mindestens 8 Zeichen lang sein")
     private String password;
-    private String roles;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
+    private java.util.Set<String> roles = new java.util.HashSet<>();
 
     public Long getId() {
         return id;
@@ -41,11 +57,32 @@ public class User {
         this.password = password;
     }
 
-    public String getRoles() {
+    public java.util.Set<String> getRoles() {
         return roles;
     }
 
-    public void setRoles(String roles) {
+    public void setRoles(java.util.Set<String> roles) {
         this.roles = roles;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id) && Objects.equals(username, user.username);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, username);
     }
 }

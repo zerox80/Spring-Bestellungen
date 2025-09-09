@@ -10,10 +10,12 @@
         <div>
             <label for="description">Beschreibung:</label>
             <textarea id="description" th:field="*{description}" required></textarea>
+            <span style="color:red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
         </div>
         <div>
             <label for="shippingAddress">Lieferadresse:</label>
             <input type="text" id="shippingAddress" th:field="*{shippingAddress}" required />
+            <span style="color:red" th:if="${#fields.hasErrors('shippingAddress')}" th:errors="*{shippingAddress}"></span>
         </div>
         <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
         <div>
