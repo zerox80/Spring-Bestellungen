@@ -10,10 +10,12 @@
         <div>
             <label for="username">Benutzername:</label>
             <input type="text" id="username" th:field="*{username}" required autofocus="autofocus" />
+            <span style="color:red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
         </div>
         <div>
             <label for="password">Passwort:</label>
             <input type="password" id="password" th:field="*{password}" required />
+            <span style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
         </div>
         <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
         <div>
