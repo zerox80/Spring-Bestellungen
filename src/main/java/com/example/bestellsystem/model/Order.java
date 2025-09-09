@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
@@ -20,9 +21,11 @@ public class Order {
     private Long id;
 
     @NotBlank(message = "Beschreibung darf nicht leer sein")
+    @Size(max = 255, message = "Beschreibung darf nicht länger als 255 Zeichen sein")
     private String description;
 
     @NotBlank(message = "Lieferadresse darf nicht leer sein")
+    @Size(max = 255, message = "Lieferadresse darf nicht länger als 255 Zeichen sein")
     private String shippingAddress;
 
     @ManyToOne(fetch = FetchType.LAZY)

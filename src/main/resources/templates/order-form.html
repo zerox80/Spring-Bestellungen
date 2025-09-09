@@ -8,13 +8,13 @@
     <h1>Neue Bestellung aufgeben</h1>
     <form th:action="@{/orders}" th:object="${order}" method="post">
         <div>
-            <label for="description">Beschreibung:</label>
-            <textarea id="description" th:field="*{description}" required></textarea>
+            <label for="description">Beschreibung (max 255 Zeichen):</label>
+            <textarea id="description" th:field="*{description}" maxlength="255" required></textarea>
             <span style="color:red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
         </div>
         <div>
-            <label for="shippingAddress">Lieferadresse:</label>
-            <input type="text" id="shippingAddress" th:field="*{shippingAddress}" required />
+            <label for="shippingAddress">Lieferadresse (max 255 Zeichen):</label>
+            <input type="text" id="shippingAddress" th:field="*{shippingAddress}" maxlength="255" required />
             <span style="color:red" th:if="${#fields.hasErrors('shippingAddress')}" th:errors="*{shippingAddress}"></span>
         </div>
         <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
