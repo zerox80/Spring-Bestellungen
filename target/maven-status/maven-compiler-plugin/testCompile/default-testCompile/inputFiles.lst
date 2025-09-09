@@ -1,1 +1,4 @@
-/app/src/test/java/com/example/bestellsystem/BestellsystemApplicationTests.java
+/app/src/test/java/com/example/bestellsystem/service/OrderServiceTest.java
+/app/src/test/java/com/example/bestellsystem/OrderControllerTests.java
+/app/src/test/java/com/example/bestellsystem/service/UserServiceTest.java
+/app/src/test/java/com/example/bestellsystem/WebControllerTests.java

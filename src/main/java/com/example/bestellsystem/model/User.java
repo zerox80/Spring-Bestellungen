@@ -29,7 +29,7 @@ public class User {
     @Size(min = 8, message = "Passwort muss mindestens 8 Zeichen lang sein")
     private String password;
 
-    @ElementCollection(fetch = FetchType.EAGER)
+    @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     private java.util.Set<String> roles = new java.util.HashSet<>();
 
