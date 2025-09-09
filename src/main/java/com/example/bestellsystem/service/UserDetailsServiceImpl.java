@@ -1,5 +1,6 @@
 package com.example.bestellsystem.service;
 
+import com.example.bestellsystem.model.Role;
 import com.example.bestellsystem.model.User;
 import com.example.bestellsystem.repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
@@ -10,6 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,9 +33,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 getAuthorities(user.getRoles()));
     }
 
-    private Collection<GrantedAuthority> getAuthorities(java.util.Set<String> roles) {
+    private Collection<GrantedAuthority> getAuthorities(Set<Role> roles) {
         return roles.stream()
-                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.trim()))
+                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.name()))
                 .collect(Collectors.toList());
     }
 }

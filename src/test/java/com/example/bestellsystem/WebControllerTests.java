@@ -1,5 +1,6 @@
 package com.example.bestellsystem;
 
+import com.example.bestellsystem.model.Role;
 import com.example.bestellsystem.model.User;
 import com.example.bestellsystem.repository.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,8 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.EnumSet;
 
 import java.util.Optional;
 
@@ -93,6 +96,7 @@ class WebControllerTests {
         User existingUser = new User();
         existingUser.setUsername("existinguser");
         existingUser.setPassword("password123");
+        existingUser.setRoles(EnumSet.of(Role.USER));
         userRepository.save(existingUser);
 
         mockMvc.perform(post("/register")

@@ -1,13 +1,13 @@
 package com.example.bestellsystem.service;
 
+import com.example.bestellsystem.model.Role;
 import com.example.bestellsystem.model.User;
 import com.example.bestellsystem.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
-import java.util.Collections;
+import java.util.EnumSet;
 
 @Service
 public class UserService {
@@ -27,7 +27,7 @@ public class UserService {
         }
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(new HashSet<>(Collections.singleton("USER"))); // Default role
+        user.setRoles(EnumSet.of(Role.USER)); // Default role
         userRepository.save(user);
     }
 }
