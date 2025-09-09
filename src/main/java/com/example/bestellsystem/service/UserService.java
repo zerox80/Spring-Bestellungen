@@ -5,7 +5,8 @@ import com.example.bestellsystem.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
+import java.util.HashSet;
+import java.util.Collections;
 
 @Service
 public class UserService {
@@ -24,7 +25,7 @@ public class UserService {
         }
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(Set.of("USER")); // Default role
+        user.setRoles(new HashSet<>(Collections.singleton("USER"))); // Default role
         userRepository.save(user);
     }
 }
