@@ -1,1 +1,4 @@
-com/example/bestellsystem/BestellsystemApplicationTests.class
+com/example/bestellsystem/service/UserServiceTest.class
+com/example/bestellsystem/service/OrderServiceTest.class
+com/example/bestellsystem/OrderControllerTests.class
+com/example/bestellsystem/WebControllerTests.class

@@ -48,7 +48,7 @@ Quelle: `src/main/java/com/example/bestellsystem/config/SecurityConfig.java`
 - Login-Seite: `/login`
 - Erfolgs-Weiterleitung nach Login: `/home`
 - Logout: POST auf `/logout` (Thymeleaf-Formular vorhanden)
-- CSRF: In der aktuellen Dev-Konfiguration deaktiviert (für einfachere Tests). Die Templates enthalten bereits optionale CSRF-Hidden-Inputs und sind damit bei aktivierter CSRF-Protection kompatibel.
+- CSRF: Der Schutz ist standardmäßig aktiviert, wie es in Spring Security üblich ist. Die Formulare in den Thymeleaf-Templates sind korrekt konfiguriert und senden das CSRF-Token mit, was für die Sicherheit der Anwendung entscheidend ist.
 
 Hinweis Thymeleaf Security Extras: In `home.html` wird das Namespace `xmlns:sec="http://www.thymeleaf.org/extras/spring-security5"` genutzt, um z. B. den eingeloggten Benutzernamen anzuzeigen.
 
@@ -90,7 +90,7 @@ Für Tests wird ein separates Profil mit H2 und Test-Properties verwendet (`src/
 ## Troubleshooting
 - Port 8080 belegt: Ändern Sie den Port per `server.port=<PORT>` in `application.properties` oder starten Sie den anderen Dienst neu.
 - Login schlägt fehl: Prüfen Sie, ob der Benutzer korrekt registriert wurde. Passwörter sind gehasht, daher kann man sie nicht im Klartext in der DB setzen.
-- CSRF-Fehler: In der Dev-Konfiguration ist CSRF deaktiviert. Falls Sie CSRF aktivieren, lassen Sie die Hidden-Inputs in Formularen aktiv (bereits in Templates vorhanden).
+- CSRF-Fehler: Wenn Sie einen Fehler bezüglich eines fehlenden oder ungültigen CSRF-Tokens erhalten, stellen Sie sicher, dass Ihr Formular mit Thymeleaf (`th:action`) gerendert wird und ein `_csrf`-Token enthält. Dies sollte bei den vorhandenen Formularen bereits der Fall sein.
 
 ## Lizenz
 Dieses Projekt ist ein Beispielprojekt zu Lernzwecken. Fügen Sie bei Bedarf Ihre Lizenzangaben hinzu.
