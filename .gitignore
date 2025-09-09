@@ -1,0 +1,21 @@
+# Ignore Maven build output
+/target/
+**/target/
+
+# Ignore compiled class files
+*.class
+
+# Ignore logs
+*.log
+
+# Ignore packaged files
+*.jar
+*.war
+*.ear
+
+# Ignore OS-specific
+.DS_Store
+
+# Ignore IDE-specific
+.idea/
+*.iml
