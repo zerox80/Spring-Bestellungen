@@ -7,6 +7,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
@@ -23,6 +24,7 @@ public class User {
 
     @NotBlank(message = "Username darf nicht leer sein")
     @Size(min = 3, max = 20, message = "Username muss zwischen 3 und 20 Zeichen lang sein")
+    @Column(nullable = false, unique = true)
     private String username;
 
     @NotBlank(message = "Passwort darf nicht leer sein")
