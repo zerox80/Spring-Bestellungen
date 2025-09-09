@@ -4,6 +4,7 @@ import com.example.bestellsystem.model.User;
 import com.example.bestellsystem.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.Collections;
@@ -19,6 +20,7 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @Transactional
     public void registerUser(User user) throws UsernameAlreadyExistsException {
         if (userRepository.findByUsername(user.getUsername()).isPresent()) {
             throw new UsernameAlreadyExistsException("Ein Benutzer mit diesem Namen existiert bereits");
