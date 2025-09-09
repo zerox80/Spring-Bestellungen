@@ -13,6 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.security.Principal;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -64,6 +65,6 @@ class OrderServiceTest {
         // Assert
         verify(userRepository).findByUsername(username);
         verify(orderRepository).save(order);
-        assert(order.getUser().equals(user));
+        assertEquals(user, order.getUser());
     }
 }
