@@ -32,8 +32,9 @@ public class OrderService {
     }
 
     private User getUser(Principal principal) {
-        // The principal should always be valid in a secured context.
-        // Throwing an exception here is appropriate if the user is not found.
+        if (principal == null) {
+            throw new IllegalStateException("No authenticated principal found");
+        }
         return userRepository.findByUsername(principal.getName())
                 .orElseThrow(() -> new IllegalArgumentException("User not found in security principal"));
     }
