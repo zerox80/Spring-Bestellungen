@@ -15,6 +15,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(MockitoExtension.class)
 class OrderServiceTest {
@@ -66,5 +67,10 @@ class OrderServiceTest {
         verify(userRepository).findByUsername(username);
         verify(orderRepository).save(order);
         assertEquals(user, order.getUser());
+    }
+
+    @Test
+    void findOrdersForCurrentUser_shouldThrowIfPrincipalIsNull() {
+        assertThrows(IllegalStateException.class, () -> orderService.findOrdersForCurrentUser(null));
     }
 }
