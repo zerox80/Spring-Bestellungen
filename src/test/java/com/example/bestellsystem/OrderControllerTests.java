@@ -76,4 +76,25 @@ class OrderControllerTests {
                 .andExpect(view().name("order-form"))
                 .andExpect(model().hasErrors());
     }
+
+    @Test
+    @WithMockUser(username = "testuser", roles = {"USER"})
+    void testCreateOrderWithTooLongFields() throws Exception {
+        // Ensure the mock user exists for validation of service layer
+        User testUser = new User();
+        testUser.setUsername("testuser");
+        testUser.setPassword("password");
+        userRepository.save(testUser);
+
+        String longText = "a".repeat(256);
+
+        mockMvc.perform(post("/orders")
+                        .param("description", longText)
+                        .param("shippingAddress", longText)
+                        .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(view().name("order-form"))
+                .andExpect(model().hasErrors())
+                .andExpect(model().attributeHasFieldErrors("order", "description", "shippingAddress"));
+    }
 }
