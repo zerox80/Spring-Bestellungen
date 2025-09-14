@@ -39,9 +39,18 @@ p { color: var(--muted); }
 a { color: var(--link); }
 
 .btn { display: inline-block; padding: 8px 14px; border-radius: 8px; border: 1px solid rgba(255,255,255,.12); color: var(--text); text-decoration: none; }
+.btn { background: transparent; cursor: pointer; }
+button.btn, input[type=button].btn, input[type=submit].btn { -webkit-appearance: none; appearance: none; background: transparent; border: 1px solid rgba(255,255,255,.12); color: var(--text); }
 .btn.primary { background: linear-gradient(135deg, #16a34a, #22c55e); border-color: rgba(255,255,255,.16); }
 .btn.danger { background: linear-gradient(135deg, #b91c1c, #ef4444); border-color: rgba(255,255,255,.16); }
+.btn.primary, .btn.danger { color: #ffffff; }
+.btn { transition: filter .15s ease, background-color .15s ease, color .15s ease, border-color .15s ease; }
+.btn:hover { filter: brightness(1.05); }
+.btn:focus-visible { outline: 2px solid #60a5fa; outline-offset: 2px; }
 .btn + .btn { margin-left: 8px; }
+
+/* Navbar spacing for buttons */
+.navlinks .btn { margin-left: 16px; }
 
 form label { display: block; margin: 12px 0 4px; color: var(--text); }
 input[type=text], input[type=password], textarea { width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.04); color: var(--text); }

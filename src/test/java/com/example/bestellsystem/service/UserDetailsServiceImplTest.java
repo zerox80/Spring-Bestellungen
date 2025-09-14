@@ -1,5 +1,6 @@
 package com.example.bestellsystem.service;
 
+import com.example.bestellsystem.model.Role;
 import com.example.bestellsystem.model.User;
 import com.example.bestellsystem.repository.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -14,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.EnumSet;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -36,7 +38,7 @@ class UserDetailsServiceImplTest {
         User user = new User();
         user.setUsername(username);
         user.setPassword(encodedPassword);
-        user.setRoles(new HashSet<>(Arrays.asList("USER", "ADMIN")));
+        user.setRoles(EnumSet.of(Role.USER, Role.ADMIN));
 
         when(userRepository.findByUsernameWithRoles(username)).thenReturn(Optional.of(user));
 

@@ -11,7 +11,7 @@ RUN mvn -B -q -DskipTests dependency:go-offline
 
 # Copy the rest of the sources and build
 COPY src ./src
-RUN mvn -B -DskipTests clean package
+RUN mvn -B -Dmaven.test.skip=true clean package
 
 # 2) Runtime stage: slim JRE 21 image
 FROM eclipse-temurin:21-jre

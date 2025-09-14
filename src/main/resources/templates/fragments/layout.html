@@ -21,7 +21,7 @@
                 <a th:href="@{/orders}">Bestellungen</a>
                 <form th:action="@{/logout}" method="post" class="inline-form">
                     <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                    <button class="btn" type="submit">Logout</button>
+                    <button class="btn danger" type="submit">Logout</button>
                 </form>
             </span>
         </nav>

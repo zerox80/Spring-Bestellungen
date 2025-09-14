@@ -1,0 +1,37 @@
+version: '3.9'
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: bestellsystem-db
+    environment:
+      - POSTGRES_DB=bestellsystem
+      - POSTGRES_USER=bestell
+      - POSTGRES_PASSWORD=bestellpw
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bestell -d bestellsystem"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "5432:5432" # optional, für lokale DB-Tools
+
+  app:
+    build: .
+    image: bestellsystem:latest
+    container_name: bestellsystem
+    depends_on:
+      - db
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=postgres
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/bestellsystem
+      - SPRING_DATASOURCE_USERNAME=bestell
+      - SPRING_DATASOURCE_PASSWORD=bestellpw
+      - JAVA_OPTS=
+    restart: unless-stopped
+
+volumes:
+  pgdata:
