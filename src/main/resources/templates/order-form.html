@@ -1,28 +1,31 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Neue Bestellung</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security6">
+<head th:replace="~{fragments/layout :: head('Neue Bestellung')}"></head>
 <body>
-    <h1>Neue Bestellung aufgeben</h1>
-    <form th:action="@{/orders}" th:object="${order}" method="post">
-        <div>
-            <label for="description">Beschreibung (max 255 Zeichen):</label>
-            <textarea id="description" th:field="*{description}" maxlength="255" required></textarea>
-            <span style="color:red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
-        </div>
-        <div>
-            <label for="shippingAddress">Lieferadresse (max 255 Zeichen):</label>
-            <input type="text" id="shippingAddress" th:field="*{shippingAddress}" maxlength="255" required />
-            <span style="color:red" th:if="${#fields.hasErrors('shippingAddress')}" th:errors="*{shippingAddress}"></span>
-        </div>
-        <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-        <div>
-            <button type="submit">Bestellung aufgeben</button>
-        </div>
-    </form>
-    <br/>
-    <a th:href="@{/orders}">Zurück zu meinen Bestellungen</a>
+    <div th:replace="~{fragments/layout :: navbar}"></div>
+
+    <div class="container">
+        <main class="panel">
+            <h1>Neue Bestellung aufgeben</h1>
+            <form th:action="@{/orders}" th:object="${order}" method="post">
+                <div>
+                    <label for="description">Beschreibung (max 255 Zeichen):</label>
+                    <textarea id="description" th:field="*{description}" maxlength="255" required></textarea>
+                    <span style="color:red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+                </div>
+                <div>
+                    <label for="shippingAddress">Lieferadresse (max 255 Zeichen):</label>
+                    <input type="text" id="shippingAddress" th:field="*{shippingAddress}" maxlength="255" required />
+                    <span style="color:red" th:if="${#fields.hasErrors('shippingAddress')}" th:errors="*{shippingAddress}"></span>
+                </div>
+                <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <div class="mt-12">
+                    <button class="btn primary" type="submit">Bestellung aufgeben</button>
+                    <a class="btn" th:href="@{/orders}">Abbrechen</a>
+                </div>
+            </form>
+        </main>
+    </div>
 </body>
 </html>
+

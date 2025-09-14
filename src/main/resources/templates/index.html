@@ -1,13 +1,21 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Willkommen beim Bestellsystem</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security6">
+<head th:replace="~{fragments/layout :: head('Willkommen beim Bestellsystem')}"></head>
 <body>
-    <h1>Willkommen!</h1>
-    <p>Willkommen bei der besten Bestell-App der Welt.</p>
-    <p><a th:href="@{/register}">Registrieren</a></p>
-    <p><a th:href="@{/login}">Einloggen</a></p>
+    <div th:replace="~{fragments/layout :: navbar}"></div>
+
+    <div class="container">
+        <main class="panel">
+            <h1>Willkommen!</h1>
+            <p>Willkommen bei der besten Bestell-App der Welt.</p>
+            <p sec:authorize="!isAuthenticated()">
+                <a class="btn primary" th:href="@{/register}">Registrieren</a>
+                <a class="btn" th:href="@{/login}">Einloggen</a>
+            </p>
+            <p sec:authorize="isAuthenticated()">
+                <a class="btn primary" th:href="@{/orders}">Zu meinen Bestellungen</a>
+            </p>
+        </main>
+    </div>
 </body>
 </html>

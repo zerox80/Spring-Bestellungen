@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security6">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title th:text="${title}">Bestellsystem</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<header th:fragment="navbar" class="header" xmlns:sec="http://www.thymeleaf.org/extras/spring-security6">
+    <div class="navbar container">
+        <div class="brand"><a th:href="@{/}">Bestellsystem</a></div>
+        <nav class="navlinks">
+            <a th:href="@{/}">Start</a>
+            <span sec:authorize="!isAuthenticated()">
+                <a th:href="@{/register}">Registrieren</a>
+                <a th:href="@{/login}">Login</a>
+            </span>
+            <span sec:authorize="isAuthenticated()">
+                <a th:href="@{/home}">Home</a>
+                <a th:href="@{/orders}">Bestellungen</a>
+                <form th:action="@{/logout}" method="post" class="inline-form">
+                    <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                    <button class="btn" type="submit">Logout</button>
+                </form>
+            </span>
+        </nav>
+    </div>
+</header>
+</body>
+</html>

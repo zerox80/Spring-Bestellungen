@@ -108,6 +108,30 @@ Hinweise:
 - Der Container exponiert Port 8080 (siehe `EXPOSE 8080` in `Dockerfile`).
 - Für die H2 Console stelle sicher, dass in der jeweiligen Umgebung `spring.h2.console.enabled=true` gesetzt ist.
 
+## Konfiguration (Entwicklung)
+- Datei: `src/main/resources/application.properties`
+- Wichtige Einstellungen:
+  - `spring.jpa.hibernate.ddl-auto=update` (Schema-Aktualisierung in Dev)
+  - `spring.h2.console.enabled=true` und `spring.h2.console.path=/h2-console`
+  - `spring.thymeleaf.cache=false` (schnelleres Templating in Dev)
+  - `management.endpoints.web.exposure.include=health,info`
+  - `management.endpoint.health.probes.enabled=true`
+
+## Actuator
+- Basis-Pfad: `/actuator`
+- Öffentlich erreichbar: `/actuator/health`, `/actuator/info`
+- Hinweis: Freigaben sind in `src/main/java/com/example/bestellsystem/config/SecurityConfig.java` konfiguriert.
+
+## UI/Styles
+- Globales CSS: `src/main/resources/static/css/styles.css`
+- Navigationsleiste in Templates integriert (`index.html`, `login.html`, `register.html`, `home.html`, `orders.html`, `order-form.html`)
+- Einheitliche Buttons, Tabellen und Layout-Panel für bessere UX
+
+## Fehlerseiten
+- Benutzerdefinierte Seiten vorhanden:
+  - `src/main/resources/templates/error/404.html`
+  - `src/main/resources/templates/error/500.html`
+
 ## Troubleshooting
 - Port 8080 belegt: Ändern Sie den Port per `server.port=<PORT>` in `application.properties` oder starten Sie den anderen Dienst neu.
 - Login schlägt fehl: Prüfen Sie, ob der Benutzer korrekt registriert wurde. Passwörter sind gehasht, daher kann man sie nicht im Klartext in der DB setzen.

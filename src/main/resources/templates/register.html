@@ -1,26 +1,30 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Registrierung</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security6">
+<head th:replace="~{fragments/layout :: head('Registrierung')}"></head>
 <body>
-    <h1>Benutzerregistrierung</h1>
-    <form th:action="@{/register}" th:object="${user}" method="post">
-        <div>
-            <label for="username">Benutzername:</label>
-            <input type="text" id="username" th:field="*{username}" required autofocus="autofocus" />
-            <span style="color:red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
-        </div>
-        <div>
-            <label for="password">Passwort:</label>
-            <input type="password" id="password" th:field="*{password}" required />
-            <span style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
-        </div>
-        <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-        <div>
-            <button type="submit">Registrieren</button>
-        </div>
-    </form>
+    <div th:replace="~{fragments/layout :: navbar}"></div>
+
+    <div class="container">
+        <main class="panel">
+            <h1>Benutzerregistrierung</h1>
+            <form th:action="@{/register}" th:object="${user}" method="post">
+                <div>
+                    <label for="username">Benutzername:</label>
+                    <input type="text" id="username" th:field="*{username}" required autofocus="autofocus" />
+                    <span style="color:red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+                </div>
+                <div>
+                    <label for="password">Passwort:</label>
+                    <input type="password" id="password" th:field="*{password}" required />
+                    <span style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+                </div>
+                <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <div class="mt-12">
+                    <button class="btn primary" type="submit">Registrieren</button>
+                </div>
+            </form>
+        </main>
+    </div>
 </body>
 </html>
+

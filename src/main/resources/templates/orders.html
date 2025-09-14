@@ -1,29 +1,50 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Meine Bestellungen</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security6">
+<head th:replace="~{fragments/layout :: head('Meine Bestellungen')}"></head>
 <body>
-    <h1>Meine Bestellungen</h1>
-    <a th:href="@{/orders/new}">Neue Bestellung aufgeben</a>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Bestell-ID</th>
-                <th>Beschreibung</th>
-                <th>Lieferadresse</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="order : ${orders}">
-                <td th:text="${order.id}">1</td>
-                <td th:text="${order.description}">Beschreibung</td>
-                <td th:text="${order.shippingAddress}">Adresse</td>
-            </tr>
-        </tbody>
-    </table>
-    <br/>
-    <a th:href="@{/home}">Zurück zur Startseite</a>
+    <div th:replace="~{fragments/layout :: navbar}"></div>
+
+    <div class="container">
+        <main class="panel">
+            <h1>Meine Bestellungen</h1>
+            <a class="btn primary mt-8" th:href="@{/orders/new}">Neue Bestellung aufgeben</a>
+
+            <div th:if="${ordersPage != null}">
+                <div th:if="${ordersPage.empty}">
+                    <p class="mt-12">Keine Bestellungen vorhanden.</p>
+                </div>
+                <div th:if="${!ordersPage.empty}">
+                    <div class="table-wrap">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Bestell-ID</th>
+                                    <th>Beschreibung</th>
+                                    <th>Lieferadresse</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="order : ${ordersPage.content}">
+                                    <td th:text="${order.id}">1</td>
+                                    <td th:text="${order.description}">Beschreibung</td>
+                                    <td th:text="${order.shippingAddress}">Adresse</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="mt-12">
+                        <a class="btn" th:href="@{/orders(page=0, size=${ordersPage.size})}" th:if="${ordersPage.totalPages > 0}">Erste</a>
+                        <a class="btn" th:href="@{/orders(page=${ordersPage.number - 1}, size=${ordersPage.size})}" th:if="${ordersPage.hasPrevious()}">Zurück</a>
+                        <span class="btn">Seite <span th:text="${ordersPage.number + 1}">1</span> / <span th:text="${ordersPage.totalPages}">1</span></span>
+                        <a class="btn" th:href="@{/orders(page=${ordersPage.number + 1}, size=${ordersPage.size})}" th:if="${ordersPage.hasNext()}">Weiter</a>
+                        <a class="btn" th:href="@{/orders(page=${ordersPage.totalPages - 1}, size=${ordersPage.size})}" th:if="${ordersPage.totalPages > 0}">Letzte</a>
+                    </div>
+                </div>
+            </div>
+
+            <a class="btn mt-12" th:href="@{/home}">Zurück zur Startseite</a>
+        </main>
+    </div>
 </body>
 </html>

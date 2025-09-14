@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Interner Serverfehler (500)')}"></head>
+<body>
+<div th:replace="~{fragments/layout :: navbar}"></div>
+<div class="container">
+    <main class="panel">
+        <h1>Oops! Etwas ist schiefgelaufen.</h1>
+        <p>Es ist ein unerwarteter Fehler aufgetreten. Bitte versuchen Sie es später erneut.</p>
+        <p>
+            <a class="btn" th:href="@{/}">Zur Startseite</a>
+        </p>
+    </main>
+</div>
+</body>
+</html>
