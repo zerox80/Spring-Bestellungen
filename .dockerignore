@@ -1,0 +1,24 @@
+# Ignore build artifacts and VCS metadata
+.target
+**/target
+.git
+.gitignore
+.idea
+.vscode
+*.iml
+
+# Maven wrapper and cache (not needed in Docker context)
+.mvn/
+mvnw
+mvnw.cmd
+
+# OS / Editor junk
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Node (if any frontend assets exist)
+node_modules/

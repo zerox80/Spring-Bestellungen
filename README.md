@@ -10,16 +10,16 @@ Eine einfache Beispiel-Anwendung für ein Bestellsystem mit Registrierung, Login
 - H2 In-Memory-Datenbank (für Entwicklung und Tests)
 
 ## Tech-Stack
-- Spring Boot 2.7.5
-- Java 11
+- Spring Boot 3.3.4
+- Java 21
 - Spring Web, Spring Data JPA, Spring Security
-- Thymeleaf (+ thymeleaf-extras-springsecurity5)
+- Thymeleaf (+ thymeleaf-extras-springsecurity6)
 - H2 Database (In-Memory)
 - Maven
 
 ## Voraussetzungen
-- Java 11 (JAVA_HOME gesetzt)
-- Maven 3.6+
+- Java 21 (JAVA_HOME gesetzt)
+- Maven 3.9+ (empfohlen)
 
 ## Projekt starten (Entwicklung)
 ```bash
@@ -50,7 +50,7 @@ Quelle: `src/main/java/com/example/bestellsystem/config/SecurityConfig.java`
 - Logout: POST auf `/logout` (Thymeleaf-Formular vorhanden)
 - CSRF: Der Schutz ist standardmäßig aktiviert, wie es in Spring Security üblich ist. Die Formulare in den Thymeleaf-Templates sind korrekt konfiguriert und senden das CSRF-Token mit, was für die Sicherheit der Anwendung entscheidend ist.
 
-Hinweis Thymeleaf Security Extras: In `home.html` wird das Namespace `xmlns:sec="http://www.thymeleaf.org/extras/spring-security5"` genutzt, um z. B. den eingeloggten Benutzernamen anzuzeigen.
+Hinweis Thymeleaf Security Extras: In `home.html` wird das Namespace `xmlns:sec="http://www.thymeleaf.org/extras/spring-security6"` genutzt, um z. B. den eingeloggten Benutzernamen anzuzeigen.
 
 ## Datenmodell
 - `User`: `id`, `username`, `password`, `roles`
@@ -86,6 +86,27 @@ Für Tests wird ein separates Profil mit H2 und Test-Properties verwendet (`src/
   - URL: `jdbc:h2:mem:testdb`
   - User: `sa`
   - Passwort: leer
+
+## Docker
+
+Build Image:
+```bash
+docker build -t bestellsystem:latest .
+```
+
+Run Container:
+```bash
+docker run --rm -p 8080:8080 --name bestellsystem bestellsystem:latest
+```
+
+Mit JVM-Optionen (optional):
+```bash
+docker run --rm -p 8080:8080 -e JAVA_OPTS="-Xms256m -Xmx512m" bestellsystem:latest
+```
+
+Hinweise:
+- Der Container exponiert Port 8080 (siehe `EXPOSE 8080` in `Dockerfile`).
+- Für die H2 Console stelle sicher, dass in der jeweiligen Umgebung `spring.h2.console.enabled=true` gesetzt ist.
 
 ## Troubleshooting
 - Port 8080 belegt: Ändern Sie den Port per `server.port=<PORT>` in `application.properties` oder starten Sie den anderen Dienst neu.
